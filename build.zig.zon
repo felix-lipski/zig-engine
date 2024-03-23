@@ -1,0 +1,9 @@
+.{
+    .name = "renderer",
+    .version = "0.1.1",
+    .dependencies = .{
+        .zphysics = .{ .path = "libs/zphysics" },
+        .zmath = .{ .path = "libs/zmath" },
+    },
+    .paths = .{""},
+}

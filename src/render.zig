@@ -1,6 +1,9 @@
 const std = @import("std");
 const rl = @import("raylib");
+const zphy = @import("zphysics");
 const Main = @import("main.zig");
+const Jolt = @import("jolt.zig");
+const game_world = @import("game_world.zig");
 
 const vecUp: rl.Vector3 = .{ .x = 0.0, .y = 1.0, .z = 0.0 };
 
@@ -53,8 +56,7 @@ pub const ShadowMapper = struct {
         };
     }
 
-    pub fn RenderGameObjects(self: *ShadowMapper, game_objects: [2]Main.GameObject) void {
-        // rl.SetShaderValue(shadowShader, shadowShader.locs.?[@intFromEnum(rl.ShaderLocationIndex.SHADER_LOC_VECTOR_VIEW)], &camera.position, rl.ShaderUniformDataType.SHADER_UNIFORM_VEC3);
+    pub fn RenderGameObjects(self: *ShadowMapper, joltWrapper: *Jolt.JoltWrapper) void {
         var lightView: rl.Matrix = undefined;
         var lightProj: rl.Matrix = undefined;
         rl.BeginTextureMode(self.shadowMap);
@@ -62,7 +64,7 @@ pub const ShadowMapper = struct {
         rl.BeginMode3D(self.lightCam);
         lightView = rl.rlGetMatrixModelview();
         lightProj = rl.rlGetMatrixProjection();
-        DrawScene(game_objects);
+        DrawScene(joltWrapper);
         rl.EndMode3D();
         rl.EndTextureMode();
         const lightViewProj: rl.Matrix = rl.MatrixMultiply(lightView, lightProj);
@@ -85,11 +87,8 @@ pub const ShadowMapper = struct {
         }
     }
 
-    // pub fn LoadShadowmapRenderTexture(self: *ShadowMapper) rl.RenderTexture2D {
     pub fn LoadShadowmapRenderTexture(width: i32, height: i32) rl.RenderTexture2D {
         var target: rl.RenderTexture2D = undefined;
-        // const width = self.shadowMapResolution;
-        // const height = self.shadowMapResolution;
 
         target.id = rl.rlLoadFramebuffer(width, height); // Load an empty framebuffer
         target.texture.width = width;
@@ -129,8 +128,25 @@ pub const ShadowMapper = struct {
     }
 };
 
-pub fn DrawScene(game_objects: [2]Main.GameObject) void {
-    for (game_objects) |object| {
-        rl.DrawModelEx(object.model, object.position, vecUp, 0.0, rl.Vector3One(), object.tint);
+pub fn DrawScene(joltWrapper: *Jolt.JoltWrapper) void {
+    const bodyInterface = joltWrapper.physics_system.getBodyInterface();
+    if (game_world.game_world) |world| {
+        for (world.gameObjects.items) |gameObject| {
+            DrawBody(gameObject, bodyInterface);
+        }
     }
+}
+
+pub fn DrawBody(object: game_world.GameObject, bodyInterface: *const zphy.BodyInterface) void {
+    const radianScale = 57.295;
+    const rotation = bodyInterface.getRotation(object.bodyId);
+    const quat = .{ .x = rotation[0], .y = rotation[1], .z = rotation[2], .w = rotation[3] };
+    var outAngle: f32 = 0;
+    var outAxis = rl.Vector3{};
+    rl.QuaternionToAxisAngle(quat, @ptrCast(&outAxis), @ptrCast(&outAngle));
+    outAngle *= radianScale;
+
+    const position = bodyInterface.getPosition(object.bodyId);
+    const rlPosition = .{ .x = position[0], .y = position[1], .z = position[2] };
+    rl.DrawModelEx(object.model, rlPosition, outAxis, outAngle, rl.Vector3One(), object.tint);
 }
