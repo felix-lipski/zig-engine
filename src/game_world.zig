@@ -2,7 +2,7 @@ const std = @import("std");
 const rl = @import("raylib");
 const zphy = @import("zphysics");
 
-pub const GameObject = struct { model: rl.Model, position: rl.Vector3, tint: rl.Color = rl.WHITE, bodyId: zphy.BodyId };
+pub const GameObject = struct { model: rl.Model, tint: rl.Color = rl.WHITE, bodyId: zphy.BodyId };
 
 const ArrayList = std.ArrayList;
 

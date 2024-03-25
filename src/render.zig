@@ -3,6 +3,7 @@ const rl = @import("raylib");
 const zphy = @import("zphysics");
 const Main = @import("main.zig");
 const Jolt = @import("jolt.zig");
+const Colors = @import("colors.zig");
 const game_world = @import("game_world.zig");
 
 const vecUp: rl.Vector3 = .{ .x = 0.0, .y = 1.0, .z = 0.0 };
@@ -69,7 +70,7 @@ pub const ShadowMapper = struct {
         rl.EndTextureMode();
         const lightViewProj: rl.Matrix = rl.MatrixMultiply(lightView, lightProj);
 
-        rl.ClearBackground(rl.RAYWHITE);
+        rl.ClearBackground(Colors.black);
 
         rl.SetShaderValueMatrix(self.shadowShader, self.lightVPLoc, lightViewProj);
 

@@ -1,0 +1,24 @@
+const rl = @import("raylib");
+
+pub const black = rl.Color{ .r = 18, .g = 18, .b = 18 };
+pub const red = rl.Color{ .r = 204, .g = 34, .b = 0 };
+pub const green = rl.Color{ .r = 119, .g = 170, .b = 0 };
+pub const yellow = rl.Color{ .r = 204, .g = 187, .b = 0 };
+pub const blue = rl.Color{ .r = 0, .g = 102, .b = 255 };
+pub const orange = rl.Color{ .r = 238, .g = 102, .b = 0 };
+pub const cyan = rl.Color{ .r = 0, .g = 170, .b = 119 };
+pub const white = rl.Color{ .r = 255, .g = 255, .b = 221 };
+pub const grey = rl.Color{ .r = 68, .g = 119, .b = 170 };
+pub const darkbrown = rl.Color{ .r = 51, .g = 34, .b = 17 };
+pub const brown = rl.Color{ .r = 136, .g = 85, .b = 0 };
+pub const cream = rl.Color{ .r = 221, .g = 153, .b = 51 };
+pub const purple = rl.Color{ .r = 102, .g = 0, .b = 255 };
+pub const pink = rl.Color{ .r = 204, .g = 34, .b = 170 };
+pub const darkgreen = rl.Color{ .r = 34, .g = 119, .b = 68 };
+pub const darkcyan = rl.Color{ .r = 34, .g = 85, .b = 85 };
+pub const darkblue = rl.Color{ .r = 17, .g = 0, .b = 136 };
+pub const darkred = rl.Color{ .r = 102, .g = 17, .b = 0 };
+pub const lightgrey = rl.Color{ .r = 153, .g = 204, .b = 221 };
+pub const mint = rl.Color{ .r = 119, .g = 238, .b = 170 };
+pub const verydarkgreen = rl.Color{ .r = 17, .g = 51, .b = 51 };
+pub const verydarkblue = rl.Color{ .r = 0, .g = 0, .b = 68 };

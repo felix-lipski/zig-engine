@@ -43,8 +43,8 @@ void main()
     lightDot += lightColor.rgb*NdotL;
 
     float specCo = 0.0;
-    if (NdotL > 0.0) specCo = pow(max(0.0, dot(viewD, reflect(-(l), normal))), 16.0); // 16 refers to shine
-    specular += specCo;
+    //if (NdotL > 0.0) specCo = pow(max(0.0, dot(viewD, reflect(-(l), normal))), 16.0); // 16 refers to shine
+    //specular += specCo;
 
     finalColor = (texelColor*((colDiffuse + vec4(specular, 1.0))*vec4(lightDot, 1.0)));
 
@@ -76,11 +76,13 @@ void main()
             }
         }
     }
-    finalColor = mix(finalColor, vec4(0, 0, 0, 1), float(shadowCounter) / float(numSamples));
 
-    // Add ambient lighting whether in shadow or not
-    finalColor += texelColor*(ambient/10.0)*colDiffuse;
+    // prefer crisper pixelized shadows
+    bool ditherX = mod(gl_FragCoord.x, 2.0) > 0.5;
+    bool ditherY = mod(gl_FragCoord.y, 2.0) > 0.5;
+    if (shadowCounter > 0 && (ditherY || ditherX)) finalColor = vec4(0.0, 0.0, 0.0, 1.0);
 
-    // Gamma correction
-    finalColor = pow(finalColor, vec4(1.0/2.2));
+    //finalColor = mix(finalColor, vec4(0, 0, 0, 1), float(shadowCounter) / float(numSamples));
+    //finalColor += texelColor*(ambient/10.0)*colDiffuse;
+    //finalColor = pow(finalColor, vec4(1.0/2.2));
 }
