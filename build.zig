@@ -1,5 +1,5 @@
 const std = @import("std");
-const raylib = @import("raylib/build.zig");
+const raylib = @import("vendor/raylib/build.zig");
 
 pub fn build(b: *std.Build) !void {
     const target = b.standardTargetOptions(.{});

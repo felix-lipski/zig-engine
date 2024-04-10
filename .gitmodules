@@ -1,3 +1,6 @@
-[submodule "raylib"]
-	path = raylib
+[submodule "vendor/raylib"]
+	path = vendor/raylib
 	url = https://github.com/ProIcons/raylib.zig.git
+[submodule "vendor/zig-gamedev"]
+	path = vendor/zig-gamedev
+	url = https://github.com/zig-gamedev/zig-gamedev.git
