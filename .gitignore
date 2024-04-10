@@ -1,3 +1,7 @@
+/vhacd/
+/resources/models/raylib/
+
+
 zig-cache/
 zig-out/
 /release/

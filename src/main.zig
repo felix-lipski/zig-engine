@@ -141,7 +141,7 @@ pub fn main() anyerror!void {
     const screenHeight = 800;
     rl.InitWindow(screenWidth, screenHeight, "hello world!");
     rl.SetTargetFPS(60);
-    rl.DisableCursor();
+    // rl.DisableCursor();
     defer rl.CloseWindow();
 
     var camera = rl.Camera3D{
@@ -158,6 +158,19 @@ pub fn main() anyerror!void {
     const body_interface = joltWrapper.physics_system.getBodyInterfaceMut();
 
     var player = try Player.init(joltWrapper, &camera);
+
+    // const model = rl.LoadModel("resources/models/robot.glb");
+    // const model = rl.LoadModel("resources/vhacd/meshes/al.obj");
+    // const model = rl.LoadModel("resources/models/house.obj");
+    // const model = rl.LoadModel("resources/vhacd/decomp.obj");
+    // _ = model;
+    // std.debug.print("meshCount: {}\n", .{model.meshCount});
+    // if (model.meshes) |meshes| {
+    // for (meshes) |_| {
+    //     std.debug.print("len\n");
+    // }
+    // }
+    // for ( // model.meshes.?[0].
 
     {
         const floor_shape_settings = try zphy.BoxShapeSettings.create(.{ 5.0, 0.5, 5.0 });

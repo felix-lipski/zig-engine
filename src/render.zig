@@ -91,7 +91,7 @@ pub const ShadowMapper = struct {
     pub fn LoadShadowmapRenderTexture(width: i32, height: i32) rl.RenderTexture2D {
         var target: rl.RenderTexture2D = undefined;
 
-        target.id = rl.rlLoadFramebuffer(width, height); // Load an empty framebuffer
+        target.id = rl.rlLoadFramebuffer(); // Load an empty framebuffer
         target.texture.width = width;
         target.texture.height = height;
 
